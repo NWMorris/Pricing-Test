@@ -1,0 +1,13 @@
+<p>Hi,</p>
+<p>An error has occured during processing</p>
+<p><strong>Error reason:</strong></p>
+<p>{0}</p>
+<p>&nbsp;</p>
+<p><strong>Error source:</strong></p>
+<p>{1}</p>
+<p>&nbsp;</p>
+<p><strong>Developer notes:</strong></p>
+<p>{2}</p>
+<p>&nbsp;</p>
+<p>Please contact the rpa team</p>
+<p>RPA@z.co.nz</p>
