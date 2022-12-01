@@ -1,4 +1,4 @@
-﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="_05_5_Retrieve_WKP_Rate_from_JDE" this:_05_5_Retrieve_WKP_Rate_from_JDE.inDate="26/10/22"
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="_05_5_Retrieve_WKP_Rate_from_JDE"
  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
  xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
@@ -16,6 +16,11 @@
     <x:Property Name="inDate" Type="InArgument(x:String)" />
     <x:Property Name="outWKP_RateDT" Type="OutArgument(sd:DataTable)" />
   </x:Members>
+  <this:_05_5_Retrieve_WKP_Rate_from_JDE.inDate>
+    <InArgument x:TypeArguments="x:String">
+      <Literal x:TypeArguments="x:String" Value="" />
+    </InArgument>
+  </this:_05_5_Retrieve_WKP_Rate_from_JDE.inDate>
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
@@ -88,15 +93,12 @@
       <AssemblyReference>System.ValueTuple</AssemblyReference>
       <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
       <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
-      <AssemblyReference>System.Collections.Immutable</AssemblyReference>
-      <AssemblyReference>Microsoft.VisualStudio.Services.Common</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="Grab wkpRates" sap2010:WorkflowViewState.IdRef="Sequence_12">
     <Sequence.Variables>
       <Variable x:TypeArguments="ui:GenericValue" Name="newFileDIR" />
     </Sequence.Variables>
-    <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Retrieve WBP from JDE - start&quot;]" />
     <Sequence DisplayName="Tidy up downloads" sap2010:WorkflowViewState.IdRef="Sequence_16">
       <Sequence.Variables>
         <Variable x:TypeArguments="ui:GenericValue" Name="downloadsFP" />
@@ -184,13 +186,11 @@
                   <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="3fab2c80860eb134ee3efa9108077c0d" Selector="&lt;webctrl aaname='CWKY BASE Query' omit:parentid='wListLabel_d275643421c4415dbc5b2972622f5a20' tag='SPAN' /&gt;" WaitForReady="INTERACTIVE" />
                 </ui:Click.Target>
               </ui:Click>
-              <Delay Duration="[timespan.FromSeconds(2)]" sap2010:WorkflowViewState.IdRef="Delay_2" />
               <ui:TypeInto DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Type Into 'EffectDate'" EmptyField="False" sap2010:WorkflowViewState.IdRef="TypeInto_1" SendWindowMessages="False" SimulateType="False" Text="[inDate]">
                 <ui:TypeInto.Target>
                   <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="8b44b666783f514f52906af6b74f7c00" Selector="&lt;webctrl id='e1menuAppIframe' tag='IFRAME' /&gt;&lt;webctrl name='qbe0_1.8' tag='INPUT' /&gt;" WaitForReady="INTERACTIVE" />
                 </ui:TypeInto.Target>
               </ui:TypeInto>
-              <Delay Duration="[timespan.FromSeconds(2)]" sap2010:WorkflowViewState.IdRef="Delay_3" />
               <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'IMG  hc_Find'" sap2010:WorkflowViewState.IdRef="Click_8" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="False">
                 <ui:Click.CursorPosition>
                   <ui:CursorPosition Position="Center">
@@ -307,66 +307,6 @@
       </Sequence.Variables>
       <ui:ReadCsvFile Encoding="{x:Null}" DataTable="[outWKP_RateDT]" Delimitator="Comma" DisplayName="Read wkpRate CSV" FilePath="[newFileDIR]" sap2010:WorkflowViewState.IdRef="ReadCsvFile_1" />
       <ui:Delete ContinueOnError="{x:Null}" sap2010:WorkflowViewState.IdRef="Delete_3" Path="[newFileDIR]" />
-      <Sequence DisplayName="Add empty B5 Row" sap2010:WorkflowViewState.IdRef="Sequence_25">
-        <Sequence.Variables>
-          <Variable x:TypeArguments="sd:DataTable" Name="filtDT" />
-          <Variable x:TypeArguments="s:String[]" Name="itemArray" />
-        </Sequence.Variables>
-        <ui:FilterDataTable DataTable="[outWKP_RateDT]" DisplayName="Filter Data Table" FilterRowsMode="Keep" sap2010:WorkflowViewState.IdRef="FilterDataTable_2" OutputDataTable="[filtDT]" SelectColumnsMode="Keep">
-          <ui:FilterDataTable.Filters>
-            <scg:List x:TypeArguments="ui:FilterOperationArgument" Capacity="4">
-              <ui:FilterOperationArgument BooleanOperator="And" Operator="CONTAINS">
-                <ui:FilterOperationArgument.Column>
-                  <InArgument x:TypeArguments="x:String">["2nd Item Number"]</InArgument>
-                </ui:FilterOperationArgument.Column>
-                <ui:FilterOperationArgument.Operand>
-                  <InArgument x:TypeArguments="x:String">["BIODIESEL B5"]</InArgument>
-                </ui:FilterOperationArgument.Operand>
-              </ui:FilterOperationArgument>
-            </scg:List>
-          </ui:FilterDataTable.Filters>
-          <ui:FilterDataTable.SelectColumns>
-            <scg:List x:TypeArguments="InArgument" Capacity="4">
-              <x:Null />
-            </scg:List>
-          </ui:FilterDataTable.SelectColumns>
-        </ui:FilterDataTable>
-        <If Condition="[filtDT.Rows.Count=0]" sap2010:WorkflowViewState.IdRef="If_3">
-          <If.Then>
-            <Sequence DisplayName="Create B5 row" sap2010:WorkflowViewState.IdRef="Sequence_24">
-              <Sequence.Variables>
-                <Variable x:TypeArguments="ui:GenericValue" Name="rowDate" />
-                <Variable x:TypeArguments="ui:GenericValue" Name="rowDate2" />
-              </Sequence.Variables>
-              <Assign sap2010:WorkflowViewState.IdRef="Assign_11">
-                <Assign.To>
-                  <OutArgument x:TypeArguments="ui:GenericValue">[rowDate]</OutArgument>
-                </Assign.To>
-                <Assign.Value>
-                  <InArgument x:TypeArguments="ui:GenericValue">[outWKP_RateDT(0)("Effective Date").ToString]</InArgument>
-                </Assign.Value>
-              </Assign>
-              <Assign sap2010:WorkflowViewState.IdRef="Assign_12">
-                <Assign.To>
-                  <OutArgument x:TypeArguments="ui:GenericValue">[rowDate2]</OutArgument>
-                </Assign.To>
-                <Assign.Value>
-                  <InArgument x:TypeArguments="ui:GenericValue">[outWKP_RateDT(0)("Expired Date").ToString]</InArgument>
-                </Assign.Value>
-              </Assign>
-              <Assign DisplayName="Row item array" sap2010:WorkflowViewState.IdRef="Assign_13">
-                <Assign.To>
-                  <OutArgument x:TypeArguments="s:String[]">[itemArray]</OutArgument>
-                </Assign.To>
-                <Assign.Value>
-                  <InArgument x:TypeArguments="s:String[]">[{"CBMWKLY","WBP","BIODIESEL B5" ,"NZD","0",rowDate,rowDate2}]</InArgument>
-                </Assign.Value>
-              </Assign>
-              <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[itemArray]" DataTable="[outWKP_RateDT]" DisplayName="Add Data Row" sap2010:WorkflowViewState.IdRef="AddDataRow_2" />
-            </Sequence>
-          </If.Then>
-        </If>
-      </Sequence>
       <ui:ForEachRow CurrentIndex="{x:Null}" DataTable="[outWKP_RateDT]" DisplayName="For Each Row" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
         <ui:ForEachRow.Body>
           <ActivityAction x:TypeArguments="sd:DataRow">
@@ -393,93 +333,26 @@
                   <InArgument x:TypeArguments="ui:GenericValue">[factorValueNumeric*100]</InArgument>
                 </Assign.Value>
               </Assign>
-              <Assign sap2010:WorkflowViewState.IdRef="Assign_9">
+              <Assign>
                 <Assign.To>
                   <OutArgument x:TypeArguments="x:Object">[row("Factor Value Numeric")]</OutArgument>
                 </Assign.To>
                 <Assign.Value>
                   <InArgument x:TypeArguments="x:Object">[factorValueNumeric]</InArgument>
                 </Assign.Value>
+                <sap2010:WorkflowViewState.IdRef>Assign_9</sap2010:WorkflowViewState.IdRef>
               </Assign>
             </Sequence>
           </ActivityAction>
         </ui:ForEachRow.Body>
       </ui:ForEachRow>
-      <ui:CommentOut DisplayName="Comment Out" sap2010:WorkflowViewState.IdRef="CommentOut_1">
-        <ui:CommentOut.Body>
-          <Sequence DisplayName="Ignored Activities" sap2010:WorkflowViewState.IdRef="Sequence_26">
-            <Sequence DisplayName="Add B5 Row" sap2010:WorkflowViewState.IdRef="Sequence_23">
-              <Sequence.Variables>
-                <Variable x:TypeArguments="sd:DataTable" Name="filtDT" />
-                <Variable x:TypeArguments="s:String[]" Name="itemArray" />
-              </Sequence.Variables>
-              <ui:FilterDataTable DataTable="[outWKP_RateDT]" DisplayName="Filter Data Table" FilterRowsMode="Keep" sap2010:WorkflowViewState.IdRef="FilterDataTable_1" OutputDataTable="[filtDT]" SelectColumnsMode="Keep">
-                <ui:FilterDataTable.Filters>
-                  <scg:List x:TypeArguments="ui:FilterOperationArgument" Capacity="4">
-                    <ui:FilterOperationArgument BooleanOperator="And" Operator="CONTAINS">
-                      <ui:FilterOperationArgument.Column>
-                        <InArgument x:TypeArguments="x:String">["2nd Item Number"]</InArgument>
-                      </ui:FilterOperationArgument.Column>
-                      <ui:FilterOperationArgument.Operand>
-                        <InArgument x:TypeArguments="x:String">["BIODIESEL B5"]</InArgument>
-                      </ui:FilterOperationArgument.Operand>
-                    </ui:FilterOperationArgument>
-                  </scg:List>
-                </ui:FilterDataTable.Filters>
-                <ui:FilterDataTable.SelectColumns>
-                  <scg:List x:TypeArguments="InArgument" Capacity="4">
-                    <x:Null />
-                  </scg:List>
-                </ui:FilterDataTable.SelectColumns>
-              </ui:FilterDataTable>
-              <If Condition="[filtDT.Rows.Count=0]" sap2010:WorkflowViewState.IdRef="If_2">
-                <If.Then>
-                  <Sequence DisplayName="Create B5 row" sap2010:WorkflowViewState.IdRef="Sequence_22">
-                    <Sequence.Variables>
-                      <Variable x:TypeArguments="ui:GenericValue" Name="rowDate" />
-                      <Variable x:TypeArguments="ui:GenericValue" Name="rowDate2" />
-                    </Sequence.Variables>
-                    <Assign sap2010:WorkflowViewState.IdRef="Assign_14">
-                      <Assign.To>
-                        <OutArgument x:TypeArguments="ui:GenericValue">[rowDate]</OutArgument>
-                      </Assign.To>
-                      <Assign.Value>
-                        <InArgument x:TypeArguments="ui:GenericValue">[outWKP_RateDT(0)("Effective Date").ToString]</InArgument>
-                      </Assign.Value>
-                    </Assign>
-                    <Assign sap2010:WorkflowViewState.IdRef="Assign_15">
-                      <Assign.To>
-                        <OutArgument x:TypeArguments="ui:GenericValue">[rowDate2]</OutArgument>
-                      </Assign.To>
-                      <Assign.Value>
-                        <InArgument x:TypeArguments="ui:GenericValue">[outWKP_RateDT(0)("Expired Date").ToString]</InArgument>
-                      </Assign.Value>
-                    </Assign>
-                    <Assign DisplayName="Row item array" sap2010:WorkflowViewState.IdRef="Assign_10">
-                      <Assign.To>
-                        <OutArgument x:TypeArguments="s:String[]">[itemArray]</OutArgument>
-                      </Assign.To>
-                      <Assign.Value>
-                        <InArgument x:TypeArguments="s:String[]">[{"CBMWKLY","WBP","BIODIESEL B5" ,"NZD","0",rowDate,rowDate2}]</InArgument>
-                      </Assign.Value>
-                    </Assign>
-                    <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[itemArray]" DataTable="[outWKP_RateDT]" DisplayName="Add Data Row" sap2010:WorkflowViewState.IdRef="AddDataRow_1" />
-                  </Sequence>
-                </If.Then>
-              </If>
-            </Sequence>
-          </Sequence>
-        </ui:CommentOut.Body>
-      </ui:CommentOut>
       <ui:OutputDataTable DataTable="[outWKP_RateDT]" DisplayName="Output Data Table" sap2010:WorkflowViewState.IdRef="OutputDataTable_1" Text="[dtText]" />
       <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[dtText]" />
     </Sequence>
-    <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;Retrieve WBP from JDE - end&quot;]" />
-    <sads:DebugSymbol.Symbol>d2lDOlxVc2Vyc1xub2VsLm1vcnJpc1xEZXNrdG9wXFJlcG9cSUZDUyAtUHJpY2luZyBQcm9maWxlIEVudHJ5XDA1IEpERVwwNS41IFJldHJpZXZlIFdLUCBSYXRlIGZyb20gSkRFLnhhbWx0AYMBAYwBAQJfA98DDgIBAWMFY6IBAwGLAWQFhQEQAgF7hgEF+wEXAgFe/AEFrwIQAgFAsAIF3AMQAgEE3QMF3QOgAQIBAmNyY58BAwGMAWkHcBADAYcBcQd4EAMBgwF5B4QBFAIBfIYBjgKGAfYCAgF6jAEL+AEWAgFfggIHiQIQAgFaigIHkQIQAgFWkgIHmQIQAgFSmgIHoQIQAgFNogIHrgIMAgFBtAIHtALEAQIBPLUCB7UCbgIBOrYCB/ECEgIBHvICB5cDFwIBDpgDB9kDFwIBDdoDB9oDnQECAQjbAwfbA4EBAgEF3QNy3QOdAQIBA245bm8DAYoBazprRwMBiAF2NHZjAwGGAXM1c0IDAYQBeakBebgBAwGBAX8NgQEYAgF9jQEN0QEYAgFp0gEN9wEYAgFghwI5hwJvAgFdhAI6hAJIAgFbjwI0jwJkAgFZjAI1jAJGAgFXlwI5lwJzAgFVlAI6lAJGAgFTnwI5nwJNAgFQnAI6nAJDAgFOogIVogIwAgFCpAILpwIWAgFHqgILrAIWAgFDtAI1tAJGAgE+tAKDAbQCkQECAT21Al21AmsCATu7AgnNAh4CATPOAgnwAg4CAR/yAjjyAkkCARz4Ag2UAxgCAQ/aA5AB2gOaAQIBC9oDJdoDNgIBCdsDdNsDfgIBBoABD4ABcAIBfo4BD5wBGgIBeJ0BD6sBGgIBdqwBD7oBGgIBdLsBD7sBZwIBcrwBD8ABHQIBbsEBD8EBZwIBbMIBD9ABGgIBatMBD+EBGgIBZ+IBD+YBGgIBZecBD/UBGgIBY/YBD/YBZwIBYaUCDaUCdAIBS6YCDaYCugECAUirAg2rAroBAgFEwAI6wAJNAgE5wwI6wwJKAgE4uwKzAbsCvQECATa7Aie7AjgCATTOAhfOAi4CASDQAg3uAhgCASH8Ag+DAxgCARiEAw+LAxgCAROMAw+TAxgCARCAAWWAAW0CAX+aAaIBmgGAAgIBeakBogGpAdkBAgF3uAGiAbgBlQICAXW7AR+7AToCAXO+AaIBvgGEAgIBcbwBpgK8AbACAgFvwQEfwQE6AgFtzgGiAc4B/wECAWvfAaIB3wGMAgIBaOQBogHkAYkCAgFm8wGiAfMB+wECAWT2AR/2AToCAWKlAmOlAnECAUymAkGmAkwCAUqmAqkBpgK3AQIBSasCQasCTwIBRqsCrAGrArcBAgFF1QIP3AIYAgEv3QIP5AIYAgEr5QIP7AIYAgEn7QIP7QKwAQIBIoEDQYEDdQIBG/4CQv4CVgIBGYkDQYkDWQIBFoYDQoYDVgIBFJEDOpEDTgIBEo4DO44DWAIBEdoCQdoCbgIBMtcCQtcCSwIBMOICQeICbAIBLt8CQt8CTAIBLOoCPOoCegIBKucCPecCSAIBKO0CUu0CYwIBJe0COu0CRwIBIw==</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d2pDOlxVc2Vyc1xub2VsLm1vcnJpc1xEb2N1bWVudHNcVWlQYXRoXElGQ1MtUHJpY2luZ1Byb2ZpbGVFbnRyeVwwNSBKREVcMDUuNSBSZXRyaWV2ZSBXS1AgUmF0ZSBmcm9tIEpERS54YW1sVhUHFTYBAmID4QIOAgEBZgWHARACAViIAQX7ARcCAT/8AQWvAhACASGwAgXfAhACAQJrB3IQAgFkcwd6EAIBYHsHhgEUAgFZiAGOAogB9gICAVeOAQv4ARYCAUCCAgeJAhACATuKAgeRAhACATeSAgeZAhACATOaAgehAhACAS6iAgeuAgwCASK0Age0AsQBAgEdtQIHtQJuAgEbtgIH3AIXAgEL3QIH3QKdAQIBBt4CB94CgQECAQNwOXBvAgFnbTptRwIBZXg0eGMCAWN1NXVCAgFhe6kBe7gBAgFegQENgwEYAgFajwEN0QEYAgFK0gEN9wEYAgFBhwI5hwJvAgE+hAI6hAJIAgE8jwI0jwJkAgE6jAI1jAJGAgE4lwI5lwJzAgE2lAI6lAJGAgE0nwI5nwJNAgExnAI6nAJDAgEvogIVogIwAgEjpAILpwIWAgEoqgILrAIWAgEktAI1tAJGAgEftAKDAbQCkQECAR61Al21AmsCARy2Aji2AkkCARm8Ag3ZAhgCAQzdApAB3QKaAQIBCd0CJd0CNgIBB94CdN4CfgIBBIIBD4IBcAIBW5ABD54BGgIBVZ8BD60BGgIBU64BD7wBGgIBUb0BD8EBHQIBTcIBD9ABGgIBS9MBD+EBGgIBSOIBD+YBGgIBRucBD/UBGgIBRPYBD/YBZwIBQqUCDaUCdAIBLKYCDaYCugECASmrAg2rAroBAgElwAIPxwIYAgEVyAIPzwIYAgEQ0AIP2AIYAgENggFlggFtAgFcnAGiAZwBgAICAVarAaIBqwHZAQIBVLoBogG6AZUCAgFSvwGiAb8BhAICAVC9AaYCvQGwAgIBTs4BogHOAf8BAgFM3wGiAd8BjAICAUnkAaIB5AGJAgIBR/MBogHzAfsBAgFF9gEf9gE6AgFDpQJjpQJxAgEtpgJBpgJMAgErpgKpAaYCtwECASqrAkGrAk8CASerAqwBqwK3AQIBJsUCQcUCdQIBGMICQsICVgIBFs0CQc0CWQIBE8oCQsoCVgIBEdUCOtUCTgIBD9ICO9ICWAIBDg==</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
-      <sap2010:ViewStateData Id="LogMessage_2" sap:VirtualizedContainerService.HintSize="414,94.6666666666667" />
       <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="286.5,60" />
       <sap2010:ViewStateData Id="Assign_2" sap:VirtualizedContainerService.HintSize="286.5,60" />
       <sap2010:ViewStateData Id="Delete_1" sap:VirtualizedContainerService.HintSize="200,22" />
@@ -491,7 +364,7 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="ForEach`1_1" sap:VirtualizedContainerService.HintSize="286.5,281" />
-      <sap2010:ViewStateData Id="Sequence_16" sap:VirtualizedContainerService.HintSize="414,52.6666666666667">
+      <sap2010:ViewStateData Id="Sequence_16" sap:VirtualizedContainerService.HintSize="336,52">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -502,14 +375,12 @@
       <sap2010:ViewStateData Id="Click_5" sap:VirtualizedContainerService.HintSize="314,106" />
       <sap2010:ViewStateData Id="Click_6" sap:VirtualizedContainerService.HintSize="314,106" />
       <sap2010:ViewStateData Id="Click_7" sap:VirtualizedContainerService.HintSize="314,106" />
-      <sap2010:ViewStateData Id="Delay_2" sap:VirtualizedContainerService.HintSize="314,22" />
       <sap2010:ViewStateData Id="TypeInto_1" sap:VirtualizedContainerService.HintSize="314,134" />
-      <sap2010:ViewStateData Id="Delay_3" sap:VirtualizedContainerService.HintSize="314,22" />
       <sap2010:ViewStateData Id="Click_8" sap:VirtualizedContainerService.HintSize="314,106" />
-      <sap2010:ViewStateData Id="Sequence_13" sap:VirtualizedContainerService.HintSize="336,966">
+      <sap2010:ViewStateData Id="Sequence_13" sap:VirtualizedContainerService.HintSize="200,52">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
             <x:Boolean x:Key="IsPinned">False</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
@@ -518,7 +389,7 @@
       <sap2010:ViewStateData Id="Check_1" sap:VirtualizedContainerService.HintSize="314,106" />
       <sap2010:ViewStateData Id="Click_10" sap:VirtualizedContainerService.HintSize="314,106" />
       <sap2010:ViewStateData Id="Delay_1" sap:VirtualizedContainerService.HintSize="314,22" />
-      <sap2010:ViewStateData Id="Sequence_14" sap:VirtualizedContainerService.HintSize="336,52.6666666666667">
+      <sap2010:ViewStateData Id="Sequence_14" sap:VirtualizedContainerService.HintSize="200,52">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -526,17 +397,17 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Sequence_11" sap:VirtualizedContainerService.HintSize="358,1182.66666666667">
+      <sap2010:ViewStateData Id="Sequence_11" sap:VirtualizedContainerService.HintSize="358,268">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="BrowserScope_2" sap:VirtualizedContainerService.HintSize="414,1328.66666666667">
+      <sap2010:ViewStateData Id="BrowserScope_2" sap:VirtualizedContainerService.HintSize="336,52">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
             <x:Boolean x:Key="IsPinned">False</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
@@ -570,7 +441,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Sequence_19" sap:VirtualizedContainerService.HintSize="414,52.6666666666667">
+      <sap2010:ViewStateData Id="Sequence_19" sap:VirtualizedContainerService.HintSize="336,52">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -578,79 +449,22 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="ReadCsvFile_1" sap:VirtualizedContainerService.HintSize="314,58.6666666666667" />
+      <sap2010:ViewStateData Id="ReadCsvFile_1" sap:VirtualizedContainerService.HintSize="314,59" />
       <sap2010:ViewStateData Id="Delete_3" sap:VirtualizedContainerService.HintSize="314,22" />
-      <sap2010:ViewStateData Id="FilterDataTable_2" sap:VirtualizedContainerService.HintSize="464,58.6666666666667" />
-      <sap2010:ViewStateData Id="Assign_11" sap:VirtualizedContainerService.HintSize="242,62" />
-      <sap2010:ViewStateData Id="Assign_12" sap:VirtualizedContainerService.HintSize="242,62" />
-      <sap2010:ViewStateData Id="Assign_13" sap:VirtualizedContainerService.HintSize="242,62" />
-      <sap2010:ViewStateData Id="AddDataRow_2" sap:VirtualizedContainerService.HintSize="242,22" />
-      <sap2010:ViewStateData Id="Sequence_24" sap:VirtualizedContainerService.HintSize="264,452">
+      <sap2010:ViewStateData Id="Assign_7" sap:VirtualizedContainerService.HintSize="242,60" />
+      <sap2010:ViewStateData Id="Assign_8" sap:VirtualizedContainerService.HintSize="242,60" />
+      <sap2010:ViewStateData Id="Assign_9" sap:VirtualizedContainerService.HintSize="242,60" />
+      <sap2010:ViewStateData Id="Sequence_21" sap:VirtualizedContainerService.HintSize="264,384">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="If_3" sap:VirtualizedContainerService.HintSize="464,606" />
-      <sap2010:ViewStateData Id="Sequence_25" sap:VirtualizedContainerService.HintSize="314,52.6666666666667">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-            <x:Boolean x:Key="IsPinned">False</x:Boolean>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Assign_7" sap:VirtualizedContainerService.HintSize="242,62" />
-      <sap2010:ViewStateData Id="Assign_8" sap:VirtualizedContainerService.HintSize="242,62" />
-      <sap2010:ViewStateData Id="Assign_9" sap:VirtualizedContainerService.HintSize="242,62" />
-      <sap2010:ViewStateData Id="Sequence_21" sap:VirtualizedContainerService.HintSize="264,390">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="ForEachRow_1" sap:VirtualizedContainerService.HintSize="314,542.666666666667" />
-      <sap2010:ViewStateData Id="FilterDataTable_1" sap:VirtualizedContainerService.HintSize="464,58.6666666666667" />
-      <sap2010:ViewStateData Id="Assign_14" sap:VirtualizedContainerService.HintSize="242,62" />
-      <sap2010:ViewStateData Id="Assign_15" sap:VirtualizedContainerService.HintSize="242,62" />
-      <sap2010:ViewStateData Id="Assign_10" sap:VirtualizedContainerService.HintSize="242,62" />
-      <sap2010:ViewStateData Id="AddDataRow_1" sap:VirtualizedContainerService.HintSize="242,22" />
-      <sap2010:ViewStateData Id="Sequence_22" sap:VirtualizedContainerService.HintSize="264,452">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="If_2" sap:VirtualizedContainerService.HintSize="464,606" />
-      <sap2010:ViewStateData Id="Sequence_23" sap:VirtualizedContainerService.HintSize="200,52.6666666666667">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-            <x:Boolean x:Key="IsPinned">False</x:Boolean>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Sequence_26" sap:VirtualizedContainerService.HintSize="222,176.666666666667">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="CommentOut_1" sap:VirtualizedContainerService.HintSize="314,52.6666666666667">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-            <x:Boolean x:Key="IsPinned">False</x:Boolean>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ForEachRow_1" sap:VirtualizedContainerService.HintSize="314,533" />
       <sap2010:ViewStateData Id="OutputDataTable_1" sap:VirtualizedContainerService.HintSize="314,22" />
-      <sap2010:ViewStateData Id="LogMessage_1" sap:VirtualizedContainerService.HintSize="314,94.6666666666667" />
-      <sap2010:ViewStateData Id="Sequence_20" sap:VirtualizedContainerService.HintSize="414,1209.33333333333">
+      <sap2010:ViewStateData Id="LogMessage_1" sap:VirtualizedContainerService.HintSize="314,93" />
+      <sap2010:ViewStateData Id="Sequence_20" sap:VirtualizedContainerService.HintSize="336,1013">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -658,15 +472,14 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="LogMessage_3" sap:VirtualizedContainerService.HintSize="414,94.6666666666667" />
-      <sap2010:ViewStateData Id="Sequence_12" sap:VirtualizedContainerService.HintSize="436,3156.66666666667">
+      <sap2010:ViewStateData Id="Sequence_12" sap:VirtualizedContainerService.HintSize="358,1413">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="_05_5_Retrieve_WKP_Rate_from_JDE_1" sap:VirtualizedContainerService.HintSize="476,3236.66666666667" />
+      <sap2010:ViewStateData Id="_05_5_Retrieve_WKP_Rate_from_JDE_1" sap:VirtualizedContainerService.HintSize="398,1493" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

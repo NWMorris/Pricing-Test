@@ -84,6 +84,7 @@
       <AssemblyReference>UiPath.Mail</AssemblyReference>
       <AssemblyReference>System.ValueTuple</AssemblyReference>
       <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Sequence DisplayName="01.9 Create National Pricing Component" sap2010:WorkflowViewState.IdRef="Sequence_10">
@@ -225,15 +226,15 @@
         </ActivityAction>
       </ui:BrowserScope.Body>
     </ui:BrowserScope>
-    <sads:DebugSymbol.Symbol>d3JDOlxVc2Vyc1xub2VsLm1vcnJpc1xEb2N1bWVudHNcVWlQYXRoXElGQ1MtUHJpY2luZ1Byb2ZpbGVFbnRyeVwwMSBJRkNTXDAxLjkgQ3JlYXRlIE5hdGlvbmFsIFByaWNpbmcgQ29tcG9uZW50LnhhbWwmWQPlAQ4CAQFaBeMBFwIBAlqiAlrQAgIBKGAL4AEWAgEDZA1kZQIBJmUNbBYCASJtDYwBGAIBHY0BDY0BZQIBG44BDa0BGAIBFq4BDa4BZQIBFK8BDbMBGwIBEbQBDbQBZQIBD7UBDbkBGwIBC7oBDboBZQIBCbsBDckBGAIBB8oBDd4BHQIBBt8BDd8BZwIBBGQdZDgCASdqOWpdAgElZzpnRgIBI24PfBoCASB9D4sBGgIBHo0BHY0BOAIBHI8BD50BGgIBGZ4BD6wBGgIBF64BHa4BOAIBFbEBoAGxAdECAgETrwGgAq8BqgICARK0AR20ATgCARC3AaABtwHyAQIBDrUBmgK1AbECAgEMugEdugE4AgEKxwGgAccB5wECAQjfAR3fAToCAQV6ogF62gICASGJAaIBiQGKAgIBH5sBogGbAeECAgEaqgGiAaoBpAICARg=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d3FDOlxVc2Vyc1xub2VsLm1vcnJpc1xEZXNrdG9wXFJlcG9cSUZDUyAtUHJpY2luZyBQcm9maWxlIEVudHJ5XDAxIElGQ1NcMDEuOSBDcmVhdGUgTmF0aW9uYWwgUHJpY2luZyBDb21wb25lbnQueGFtbCZaA+YBDgIBAVsF5AEXAgECW6ICW9ACAgEoYQvhARYCAQNlDWVlAgEmZg1tFgIBIm4NjQEYAgEdjgENjgFlAgEbjwENrgEYAgEWrwENrwFlAgEUsAENtAEbAgERtQENtQFlAgEPtgENugEbAgELuwENuwFlAgEJvAENygEYAgEHywEN3wEdAgEG4AEN4AFnAgEEZR1lOAIBJ2s5a10CASVoOmhGAgEjbw99GgIBIH4PjAEaAgEejgEdjgE4AgEckAEPngEaAgEZnwEPrQEaAgEXrwEdrwE4AgEVsgGgAbIB0QICAROwAaACsAGqAgIBErUBHbUBOAIBELgBoAG4AfIBAgEOtgGaArYBsQICAQy7AR27ATgCAQrIAaAByAHnAQIBCOABHeABOgIBBXuiAXvaAgIBIYoBogGKAYoCAgEfnAGiAZwB4QICARqrAaIBqwGkAgIBGA==</sads:DebugSymbol.Symbol>
   </Sequence>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
       <sap2010:ViewStateData Id="Delay_5" sap:VirtualizedContainerService.HintSize="314,22" />
-      <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="314,60" />
+      <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="314,62" />
       <sap2010:ViewStateData Id="Click_3" sap:VirtualizedContainerService.HintSize="314,106" />
       <sap2010:ViewStateData Id="Click_4" sap:VirtualizedContainerService.HintSize="314,106" />
-      <sap2010:ViewStateData Id="Sequence_8" sap:VirtualizedContainerService.HintSize="314,52">
+      <sap2010:ViewStateData Id="Sequence_8" sap:VirtualizedContainerService.HintSize="314,52.6666666666667">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -244,7 +245,7 @@
       <sap2010:ViewStateData Id="Delay_1" sap:VirtualizedContainerService.HintSize="314,22" />
       <sap2010:ViewStateData Id="Click_5" sap:VirtualizedContainerService.HintSize="314,106" />
       <sap2010:ViewStateData Id="Click_6" sap:VirtualizedContainerService.HintSize="314,106" />
-      <sap2010:ViewStateData Id="Sequence_11" sap:VirtualizedContainerService.HintSize="314,52">
+      <sap2010:ViewStateData Id="Sequence_11" sap:VirtualizedContainerService.HintSize="314,52.6666666666667">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -275,15 +276,15 @@
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="Delay_2" sap:VirtualizedContainerService.HintSize="314,22" />
-      <sap2010:ViewStateData Id="Sequence_9" sap:VirtualizedContainerService.HintSize="336,1326">
+      <sap2010:ViewStateData Id="Sequence_9" sap:VirtualizedContainerService.HintSize="336,1329.33333333333">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="BrowserScope_1" sap:VirtualizedContainerService.HintSize="414,1472" />
-      <sap2010:ViewStateData Id="Sequence_10" sap:VirtualizedContainerService.HintSize="436,1596">
+      <sap2010:ViewStateData Id="BrowserScope_1" sap:VirtualizedContainerService.HintSize="414,1475.33333333333" />
+      <sap2010:ViewStateData Id="Sequence_10" sap:VirtualizedContainerService.HintSize="436,1599.33333333333">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
@@ -291,7 +292,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="_01_9_Create_National_Pricing_Component_1" sap:VirtualizedContainerService.HintSize="476,1676" />
+      <sap2010:ViewStateData Id="_01_9_Create_National_Pricing_Component_1" sap:VirtualizedContainerService.HintSize="476,1679.33333333333" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>
