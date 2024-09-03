@@ -1,15 +1,4 @@
-﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="_06_4_Schedule_Sector_and_National_pricing_run" mva:VisualBasic.Settings="{x:Null}" sap2010:WorkflowViewState.IdRef="_06_4_Schedule_Sector_and_National_pricing_run_1"
- xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
- xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
- xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
- xmlns:s="clr-namespace:System;assembly=mscorlib"
- xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
- xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
- xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
- xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
- xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
- xmlns:ui="http://schemas.uipath.com/workflow/activities"
- xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="_06_4_Schedule_Sector_and_National_pricing_run" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="1257.33333333333,1488" sap2010:WorkflowViewState.IdRef="_06_4_Schedule_Sector_and_National_pricing_run_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
       <x:String>System.Activities</x:String>
@@ -59,10 +48,13 @@
       <AssemblyReference>UiPath.Mail</AssemblyReference>
       <AssemblyReference>System.ValueTuple</AssemblyReference>
       <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>NPOI</AssemblyReference>
       <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="06.4 Schedule Sector and National pricing run" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="06.4 Schedule Sector and National pricing run" sap:VirtualizedContainerService.HintSize="610.666666666667,1423.33333333333" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="ui:GenericValue" Name="endPoint" />
       <Variable x:TypeArguments="ui:GenericValue" Name="diasbleScehduleDate" />
@@ -70,27 +62,50 @@
       <Variable x:TypeArguments="ui:GenericValue" Name="scheduleID" />
       <Variable x:TypeArguments="x:Int32" Name="statusCode" />
     </Sequence.Variables>
-    <TryCatch DisplayName="Try Catch" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="568.666666666667,1331.33333333333" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
       <TryCatch.Try>
-        <Sequence DisplayName="The whole process" sap2010:WorkflowViewState.IdRef="Sequence_3">
-          <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Scheduling additional run for Sector and National pricing&quot;]" />
-          <Sequence DisplayName="Enable Schedule" sap2010:WorkflowViewState.IdRef="Sequence_2">
+        <Sequence DisplayName="The whole process" sap:VirtualizedContainerService.HintSize="530,1093.33333333333" sap2010:WorkflowViewState.IdRef="Sequence_3">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="488,80.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Scheduling additional run for Sector and National pricing&quot;]" />
+          <Sequence DisplayName="Enable Schedule" sap:VirtualizedContainerService.HintSize="488,562.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_2">
             <Sequence.Variables>
               <Variable x:TypeArguments="ui:GenericValue" Name="enableJSON" />
             </Sequence.Variables>
-            <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;Enabling schedule via API&quot;]" />
-            <Assign sap2010:WorkflowViewState.IdRef="Assign_5">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="318.666666666667,80.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;Enabling schedule via API&quot;]" />
+            <Assign sap:VirtualizedContainerService.HintSize="318.666666666667,65.3333333333333" sap2010:WorkflowViewState.IdRef="Assign_5">
               <Assign.To>
                 <OutArgument x:TypeArguments="ui:GenericValue">[enableJSON]</OutArgument>
               </Assign.To>
               <Assign.Value>
                 <InArgument x:TypeArguments="ui:GenericValue" xml:space="preserve">["{ "+
-"""scheduleIds"": [27],"+
+"""scheduleIds"": [5],"+
 """enabled"": true"+
 "}"]</InArgument>
               </Assign.Value>
             </Assign>
-            <Assign DisplayName="Assign edit endpont" sap2010:WorkflowViewState.IdRef="Assign_6">
+            <Assign DisplayName="Assign edit endpont" sap:VirtualizedContainerService.HintSize="318.666666666667,62" sap2010:WorkflowViewState.IdRef="Assign_6">
               <Assign.To>
                 <OutArgument x:TypeArguments="ui:GenericValue">[endPoint]</OutArgument>
               </Assign.To>
@@ -98,17 +113,34 @@
                 <InArgument x:TypeArguments="ui:GenericValue">["/odata/ProcessSchedules/UiPath.Server.Configuration.OData.SetEnabled"]</InArgument>
               </Assign.Value>
             </Assign>
-            <ui:OrchestratorHttpRequest TimeoutMS="{x:Null}" DisplayName="Orchestrator HTTP Request" sap2010:WorkflowViewState.IdRef="OrchestratorHttpRequest_3" JSONPayload="[enableJSON]" Method="POST" RelativeEndpoint="[endPoint]" StatusCode="[statusCode]" />
-            <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[&quot;Enable status code =&gt; &quot; +statusCode.ToString]" />
+            <ui:OrchestratorHttpRequest ResponseHeaders="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Orchestrator HTTP Request" sap:VirtualizedContainerService.HintSize="318.666666666667,22" sap2010:WorkflowViewState.IdRef="OrchestratorHttpRequest_3" JSONPayload="[enableJSON]" Method="POST" RelativeEndpoint="[endPoint]" StatusCode="[statusCode]" />
+            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="318.666666666667,80.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[&quot;Enable status code =&gt; &quot; +statusCode.ToString]" />
           </Sequence>
-          <If Condition="[statusCode=200]" DisplayName="If successful call edit api" sap2010:WorkflowViewState.IdRef="If_2">
+          <If Condition="[statusCode=200]" DisplayName="If successful call edit api" sap:VirtualizedContainerService.HintSize="488,278" sap2010:WorkflowViewState.IdRef="If_2">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
             <If.Then>
-              <ui:CommentOut DisplayName="Comment Out" sap2010:WorkflowViewState.IdRef="CommentOut_3">
+              <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="CommentOut_3">
                 <ui:CommentOut.Body>
-                  <Sequence DisplayName="Ignored Activities" sap2010:WorkflowViewState.IdRef="Sequence_10">
-                    <Sequence DisplayName="Update scehdule" sap2010:WorkflowViewState.IdRef="Sequence_7">
-                      <Delay Duration="[timespan.FromSeconds(2)]" sap2010:WorkflowViewState.IdRef="Delay_1" />
-                      <Assign DisplayName="Assign schedule ID" sap2010:WorkflowViewState.IdRef="Assign_1">
+                  <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="222,176" sap2010:WorkflowViewState.IdRef="Sequence_10">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <Sequence DisplayName="Update scehdule" sap:VirtualizedContainerService.HintSize="200,52" sap2010:WorkflowViewState.IdRef="Sequence_7">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <Delay Duration="[timespan.FromSeconds(2)]" sap:VirtualizedContainerService.HintSize="675,22" sap2010:WorkflowViewState.IdRef="Delay_1" />
+                      <Assign DisplayName="Assign schedule ID" sap:VirtualizedContainerService.HintSize="675,60" sap2010:WorkflowViewState.IdRef="Assign_1">
                         <Assign.To>
                           <OutArgument x:TypeArguments="ui:GenericValue">[scheduleID]</OutArgument>
                         </Assign.To>
@@ -116,7 +148,7 @@
                           <InArgument x:TypeArguments="ui:GenericValue">[27]</InArgument>
                         </Assign.Value>
                       </Assign>
-                      <Assign DisplayName="Assign edit endpont" sap2010:WorkflowViewState.IdRef="Assign_2">
+                      <Assign DisplayName="Assign edit endpont" sap:VirtualizedContainerService.HintSize="675,60" sap2010:WorkflowViewState.IdRef="Assign_2">
                         <Assign.To>
                           <OutArgument x:TypeArguments="ui:GenericValue">[endPoint]</OutArgument>
                         </Assign.To>
@@ -124,7 +156,7 @@
                           <InArgument x:TypeArguments="ui:GenericValue">["/odata/ProcessSchedules({"+scheduleID+"})"]</InArgument>
                         </Assign.Value>
                       </Assign>
-                      <Assign DisplayName="stop process date" sap2010:WorkflowViewState.IdRef="Assign_3">
+                      <Assign DisplayName="stop process date" sap:VirtualizedContainerService.HintSize="675,60" sap2010:WorkflowViewState.IdRef="Assign_3">
                         <Assign.To>
                           <OutArgument x:TypeArguments="ui:GenericValue">[diasbleScehduleDate]</OutArgument>
                         </Assign.To>
@@ -132,7 +164,7 @@
                           <InArgument x:TypeArguments="ui:GenericValue">[DateTime.Now.AddDays(2).ToString("yyyy-MM-dd")+"T00:00:00Z"]</InArgument>
                         </Assign.Value>
                       </Assign>
-                      <Assign DisplayName="Assign payload edit scehdule" sap2010:WorkflowViewState.IdRef="Assign_4">
+                      <Assign DisplayName="Assign payload edit scehdule" sap:VirtualizedContainerService.HintSize="675,64" sap2010:WorkflowViewState.IdRef="Assign_4">
                         <Assign.To>
                           <OutArgument x:TypeArguments="ui:GenericValue">[jsonPayload]</OutArgument>
                         </Assign.To>
@@ -163,40 +195,69 @@
 "}"]</InArgument>
                         </Assign.Value>
                       </Assign>
-                      <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Editing schedule in Orchestrator via API =&gt; Sector and National pricing run&quot;]" />
-                      <ui:OrchestratorHttpRequest TimeoutMS="{x:Null}" DisplayName="Edit schedule in Orchestrator" sap2010:WorkflowViewState.IdRef="OrchestratorHttpRequest_1" JSONPayload="[jsonPayload]" Method="PUT" RelativeEndpoint="[endPoint]" StatusCode="[statusCode]" />
-                      <If Condition="[statusCode=204 or statusCode=200]" sap2010:WorkflowViewState.IdRef="If_3">
+                      <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="675,93" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Editing schedule in Orchestrator via API =&gt; Sector and National pricing run&quot;]" />
+                      <ui:OrchestratorHttpRequest ResponseHeaders="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Edit schedule in Orchestrator" sap:VirtualizedContainerService.HintSize="675,22" sap2010:WorkflowViewState.IdRef="OrchestratorHttpRequest_1" JSONPayload="[jsonPayload]" Method="PUT" RelativeEndpoint="[endPoint]" StatusCode="[statusCode]" />
+                      <If Condition="[statusCode=204 or statusCode=200]" sap:VirtualizedContainerService.HintSize="675,429" sap2010:WorkflowViewState.IdRef="If_3">
                         <If.Then>
-                          <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_8" Level="Info" Message="[&quot;Edit API was completed successfully&quot;]" />
+                          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="314,93" sap2010:WorkflowViewState.IdRef="LogMessage_8" Level="Info" Message="[&quot;Edit API was completed successfully&quot;]" />
                         </If.Then>
                         <If.Else>
-                          <Sequence DisplayName="Error" sap2010:WorkflowViewState.IdRef="Sequence_8">
-                            <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_9" Level="Error" Message="[&quot;Schedule update status code =&gt; &quot;+ statusCode.ToString]" />
-                            <Throw DisplayName="Throw unable to edit " Exception="[new Exception(&quot;Failed to edit and enable schedule via api.&lt;br&gt;&quot;+&quot;RPA note: Please manually edit schedule =&gt; Sector and National pricing run&quot;)]" sap2010:WorkflowViewState.IdRef="Throw_3" />
+                          <Sequence DisplayName="Error" sap:VirtualizedContainerService.HintSize="336,279" sap2010:WorkflowViewState.IdRef="Sequence_8">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="314,93" sap2010:WorkflowViewState.IdRef="LogMessage_9" Level="Error" Message="[&quot;Schedule update status code =&gt; &quot;+ statusCode.ToString]" />
+                            <Throw DisplayName="Throw unable to edit " Exception="[new Exception(&quot;Failed to edit and enable schedule via api.&lt;br&gt;&quot;+&quot;RPA note: Please manually edit schedule =&gt; Sector and National pricing run&quot;)]" sap:VirtualizedContainerService.HintSize="314,22" sap2010:WorkflowViewState.IdRef="Throw_3" />
                           </Sequence>
                         </If.Else>
                       </If>
                     </Sequence>
                   </Sequence>
                 </ui:CommentOut.Body>
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
               </ui:CommentOut>
             </If.Then>
             <If.Else>
-              <Sequence DisplayName="Error" sap2010:WorkflowViewState.IdRef="Sequence_6">
-                <Throw DisplayName="Throw unable to enable" Exception="[new Exception(&quot;Failed to enable schedule via api. &lt;br&gt;&quot;+&quot;RPA note: Please manually enable schedule =&gt; Sector and National pricing run&quot;)]" sap2010:WorkflowViewState.IdRef="Throw_2" />
+              <Sequence DisplayName="Error" sap:VirtualizedContainerService.HintSize="242,114" sap2010:WorkflowViewState.IdRef="Sequence_6">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <Throw DisplayName="Throw unable to enable" Exception="[new Exception(&quot;Failed to enable schedule via api. &lt;br&gt;&quot;+&quot;RPA note: Please manually enable schedule =&gt; Sector and National pricing run&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_2" />
               </Sequence>
             </If.Else>
           </If>
         </Sequence>
       </TryCatch.Try>
       <TryCatch.Catches>
-        <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="534.666666666667,22" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
           <ActivityAction x:TypeArguments="s:Exception">
             <ActivityAction.Argument>
               <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
             </ActivityAction.Argument>
-            <Sequence DisplayName="Error catch" sap2010:WorkflowViewState.IdRef="Sequence_5">
-              <Assign sap2010:WorkflowViewState.IdRef="Assign_7">
+            <Sequence DisplayName="Error catch" sap:VirtualizedContainerService.HintSize="356,278.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_5">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <Assign sap:VirtualizedContainerService.HintSize="314,62" sap2010:WorkflowViewState.IdRef="Assign_7">
                 <Assign.To>
                   <OutArgument x:TypeArguments="x:String">[exception.Source]</OutArgument>
                 </Assign.To>
@@ -204,7 +265,7 @@
                   <InArgument x:TypeArguments="x:String">["API.API Status =&gt; "+ statusCode.ToString]</InArgument>
                 </Assign.Value>
               </Assign>
-              <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke 02.2 Send Error Notification workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="02 Outlook\02.2 Send Error Notification.xaml">
+              <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="Invoke 02.2 Send Error Notification workflow" sap:VirtualizedContainerService.HintSize="314,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="02 Outlook\02.2 Send Error Notification.xaml">
                 <ui:InvokeWorkflowFile.Arguments>
                   <InArgument x:TypeArguments="s:Exception" x:Key="in_exception">[exception]</InArgument>
                 </ui:InvokeWorkflowFile.Arguments>
@@ -214,124 +275,5 @@
         </Catch>
       </TryCatch.Catches>
     </TryCatch>
-    <sads:DebugSymbol.Symbol>d3lDOlxVc2Vyc1xub2VsLm1vcnJpc1xEb2N1bWVudHNcVWlQYXRoXElGQ1MtUHJpY2luZ1Byb2ZpbGVFbnRyeVwwNiBTaGFyZWRcMDYuNCBFbmFibGUgU2VjdG9yIGFuZCBOYXRpb25hbCBwcmljaW5nIHJ1bi54YW1sIEED2gEOAgEBSQXYARACAQJLCb4BFAIBDcYBDdQBGAIBA0wLTMQBAgEoTQtnFgIBFWgLvQEQAgEOxwEPzgEYAgEIzwEP0wEnAgEETHhMwQECASlRDVGmAQIBJlINXBYCASJdDWQWAgEeZQ1lhQICARlmDWa7AQIBFmgZaCsCAQ9qD7YBHwIBFLkBD7sBGgIBEcwBOswBaAIBC8kBO8kBTQIBCdEBUtEBXQIBBs8B0wHPAYECAgEFUXpRowECASdUQFRMAgEjYj9ihwECASFfQF9KAgEfZdwBZegBAgEdZa4BZbwBAgEcZfQBZYICAgEaZnpmuAECARe6ARG6AZwCAgESugFHugHvAQIBEw==</sads:DebugSymbol.Symbol>
   </Sequence>
-  <sap2010:WorkflowViewState.ViewStateManager>
-    <sap2010:ViewStateManager>
-      <sap2010:ViewStateData Id="LogMessage_1" sap:VirtualizedContainerService.HintSize="464,93" />
-      <sap2010:ViewStateData Id="LogMessage_3" sap:VirtualizedContainerService.HintSize="314,93" />
-      <sap2010:ViewStateData Id="Assign_5" sap:VirtualizedContainerService.HintSize="314,64" />
-      <sap2010:ViewStateData Id="Assign_6" sap:VirtualizedContainerService.HintSize="314,60" />
-      <sap2010:ViewStateData Id="OrchestratorHttpRequest_3" sap:VirtualizedContainerService.HintSize="314,22" />
-      <sap2010:ViewStateData Id="LogMessage_6" sap:VirtualizedContainerService.HintSize="314,93" />
-      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="464,616">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-            <x:Boolean x:Key="IsPinned">False</x:Boolean>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Delay_1" sap:VirtualizedContainerService.HintSize="675,22" />
-      <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="675,60" />
-      <sap2010:ViewStateData Id="Assign_2" sap:VirtualizedContainerService.HintSize="675,60" />
-      <sap2010:ViewStateData Id="Assign_3" sap:VirtualizedContainerService.HintSize="675,60" />
-      <sap2010:ViewStateData Id="Assign_4" sap:VirtualizedContainerService.HintSize="675,64" />
-      <sap2010:ViewStateData Id="LogMessage_2" sap:VirtualizedContainerService.HintSize="675,93" />
-      <sap2010:ViewStateData Id="OrchestratorHttpRequest_1" sap:VirtualizedContainerService.HintSize="675,22" />
-      <sap2010:ViewStateData Id="LogMessage_8" sap:VirtualizedContainerService.HintSize="314,93" />
-      <sap2010:ViewStateData Id="LogMessage_9" sap:VirtualizedContainerService.HintSize="314,93" />
-      <sap2010:ViewStateData Id="Throw_3" sap:VirtualizedContainerService.HintSize="314,22" />
-      <sap2010:ViewStateData Id="Sequence_8" sap:VirtualizedContainerService.HintSize="336,279">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-            <x:Boolean x:Key="IsPinned">False</x:Boolean>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="If_3" sap:VirtualizedContainerService.HintSize="675,429" />
-      <sap2010:ViewStateData Id="Sequence_7" sap:VirtualizedContainerService.HintSize="200,52">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-            <x:Boolean x:Key="IsPinned">False</x:Boolean>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Sequence_10" sap:VirtualizedContainerService.HintSize="222,176">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="CommentOut_3" sap:VirtualizedContainerService.HintSize="200,52">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-            <x:Boolean x:Key="IsPinned">False</x:Boolean>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Throw_2" sap:VirtualizedContainerService.HintSize="200,22" />
-      <sap2010:ViewStateData Id="Sequence_6" sap:VirtualizedContainerService.HintSize="222,146">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-            <x:Boolean x:Key="IsPinned">False</x:Boolean>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="If_2" sap:VirtualizedContainerService.HintSize="464,296">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-            <x:Boolean x:Key="IsPinned">False</x:Boolean>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="486,1209">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-            <x:Boolean x:Key="IsPinned">False</x:Boolean>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Assign_7" sap:VirtualizedContainerService.HintSize="314,60" />
-      <sap2010:ViewStateData Id="InvokeWorkflowFile_1" sap:VirtualizedContainerService.HintSize="314,87" />
-      <sap2010:ViewStateData Id="Sequence_5" sap:VirtualizedContainerService.HintSize="336,311">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Catch`1_1" sap:VirtualizedContainerService.HintSize="490,22">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-            <x:Boolean x:Key="IsPinned">False</x:Boolean>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="TryCatch_1" sap:VirtualizedContainerService.HintSize="504,1441">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-            <x:Boolean x:Key="IsPinned">False</x:Boolean>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="526,1565">
-        <sap:WorkflowViewStateService.ViewState>
-          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-          </scg:Dictionary>
-        </sap:WorkflowViewStateService.ViewState>
-      </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="_06_4_Schedule_Sector_and_National_pricing_run_1" sap:VirtualizedContainerService.HintSize="566,1645" />
-    </sap2010:ViewStateManager>
-  </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>
