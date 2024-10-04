@@ -17,7 +17,7 @@ jobs:
       # Step 2: Download and Install UiPath CLI (2021 Version)
       - name: Download and Install UiPath CLI (2021 Version)
         run: |
-          # Download the UiPath CLI 2021.10 version from the provided URL
+          # Download the UiPath CLI 2021.10 version
           Invoke-WebRequest -Uri "https://pkgs.dev.azure.com/uipath/Public.Feeds/_apis/packaging/feeds/UiPath-Official/nuget/packages/UiPath.CLI/versions/21.10.8319.10920/content" -OutFile "UiPath.CLI.nupkg"
           
           # Create a directory for the extracted files
@@ -26,10 +26,11 @@ jobs:
           # Extract the NuGet package
           Expand-Archive -Path "UiPath.CLI.nupkg" -DestinationPath "uipath-cli"
           
-          # Add the CLI binaries to PATH
-          $Env:Path += ";$PWD\uipath-cli\tools"
+          # List contents of the extracted directory to verify the structure
+          Get-ChildItem -Path "uipath-cli" -Recurse
 
-      # Step 3: Authenticate with UiPath Orchestrator (2021 Version)
+      # Step 3: Use the correct path to execute the CLI
+      # This assumes that after extraction, the file is located in `tools/uipcli.exe`
       - name: Authenticate with UiPath Orchestrator
         run: |
           ./uipath-cli/tools/uipcli.exe login -client_id $env:UI_ORCHESTRATOR_CLIENT_ID -client_secret $env:UI_ORCHESTRATOR_CLIENT_SECRET -o $env:UI_ORCHESTRATOR_INSTANCE_URL
