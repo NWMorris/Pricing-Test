@@ -1,4 +1,4 @@
-name: Push Existing UiPath Package to Orchestrator
+name: Deploy UiPath Package to Orchestrator
 
 on:
   push:
@@ -14,26 +14,13 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      # Step 2: Download and Install UiPath CLI via the provided link (23.10 Version)
-      - name: Download and Install UiPath CLI (23.10 Version)
-        run: |
-          # Download the UiPath CLI 23.10 version
-          Invoke-WebRequest -Uri "https://pkgs.dev.azure.com/uipath/Public.Feeds/_apis/packaging/feeds/UiPath-Official/nuget/packages/UiPath.CLI/versions/23.10.8894.39673/content" -OutFile "UiPath.CLI.nupkg"
-          
-          # Create a directory for the extracted files
-          New-Item -Path "uipath-cli" -ItemType Directory
-          
-          # Extract the NuGet package
-          Expand-Archive -Path "UiPath.CLI.nupkg" -DestinationPath "uipath-cli"
-          
-          # Add the CLI to PATH (assuming the executable will be in the tools folder)
-          $Env:Path += ";$PWD\uipath-cli\tools"
-
-      # Step 3: Push the existing NuGet package located in the root folder to Orchestrator
-      - name: Push Existing NuGet Package to Orchestrator
-        run: |
-          ./uipath-cli/tools/uipcli.exe package deploy "./JDELubricantOrderEntry.1.0.8348.nupkg" --orchestrator-url $env:UI_ORCHESTRATOR_INSTANCE_URL --client-id $env:UI_ORCHESTRATOR_CLIENT_ID --client-secret $env:UI_ORCHESTRATOR_CLIENT_SECRET
-        env:
-          UI_ORCHESTRATOR_CLIENT_ID: ${{ secrets.UI_ORCHESTRATOR_CLIENT_ID }}
-          UI_ORCHESTRATOR_CLIENT_SECRET: ${{ secrets.UI_ORCHESTRATOR_CLIENT_SECRET }}
-          UI_ORCHESTRATOR_INSTANCE_URL: ${{ secrets.UI_ORCHESTRATOR_INSTANCE_URL }}
+      # Step 2: Deploy the existing .nupkg package using UiPath-Deploy
+      - name: UiPath Deploy
+        uses: Mikael-RnD/UiPath-Deploy@v1
+        with:
+          packagesPath: ${{ github.workspace }}/JDELubricantOrderEntry.1.0.8348.nupkg
+          orchestratorTenant: default
+          orchestratorFolder: "Shared"
+          orchestratorApplicationId: ${{ secrets.UI_ORCHESTRATOR_CLIENT_ID }}
+          orchestratorApplicationSecret: ${{ secrets.UI_ORCHESTRATOR_CLIENT_SECRET }}
+          orchestratorLogicalName: ${{ secrets.UI_ORCHESTRATOR_INSTANCE_URL }}
