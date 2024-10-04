@@ -1,4 +1,4 @@
-name: Deploy UiPath Package to On-Prem Orchestrator (2021.10)
+name: Deploy UiPath Package to On-Prem Orchestrator (23.10)
 
 on:
   push:
@@ -14,33 +14,41 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      # Step 2: Install UiPath CLI via NuGet
-      - name: Install UiPath CLI
+      # Step 2: Download and Install UiPath CLI via the provided link (23.10 Version)
+      - name: Download and Install UiPath CLI (23.10 Version)
         run: |
-          # Install NuGet and add it to the path
-          Invoke-WebRequest -Uri "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" -OutFile "nuget.exe"
+          # Download the UiPath CLI 23.10 version
+          Invoke-WebRequest -Uri "https://pkgs.dev.azure.com/uipath/Public.Feeds/_apis/packaging/feeds/UiPath-Official/nuget/packages/UiPath.CLI/versions/23.10.8894.39673/content" -OutFile "UiPath.CLI.nupkg"
           
-          # Install UiPath CLI from the official NuGet feed
-          ./nuget.exe install UiPath.CLI -Version 21.10.8319.10920 -OutputDirectory "uipath-cli"
+          # Create a directory for the extracted files
+          New-Item -Path "uipath-cli" -ItemType Directory
           
-          # Add the CLI to PATH
-          $Env:Path += ";$PWD\uipath-cli\UiPath.CLI.21.10.8319.10920\tools"
+          # Extract the NuGet package
+          Expand-Archive -Path "UiPath.CLI.nupkg" -DestinationPath "uipath-cli"
+          
+          # Add the CLI to PATH (assuming the executable will be in the tools folder)
+          $Env:Path += ";$PWD\uipath-cli\tools"
 
-      # Step 3: Authenticate with UiPath Orchestrator
+      # Step 3: List the extracted directory to verify correct extraction
+      - name: List extracted files
+        run: |
+          Get-ChildItem -Path "uipath-cli" -Recurse
+
+      # Step 4: Authenticate with UiPath Orchestrator (23.10 Version)
       - name: Authenticate with UiPath Orchestrator
         run: |
-          uipcli login -client_id $env:UI_ORCHESTRATOR_CLIENT_ID -client_secret $env:UI_ORCHESTRATOR_CLIENT_SECRET -o $env:UI_ORCHESTRATOR_INSTANCE_URL
+          ./uipath-cli/tools/uipcli.exe login -client_id $env:UI_ORCHESTRATOR_CLIENT_ID -client_secret $env:UI_ORCHESTRATOR_CLIENT_SECRET -o $env:UI_ORCHESTRATOR_INSTANCE_URL
         env:
           UI_ORCHESTRATOR_CLIENT_ID: ${{ secrets.UI_ORCHESTRATOR_CLIENT_ID }}
           UI_ORCHESTRATOR_CLIENT_SECRET: ${{ secrets.UI_ORCHESTRATOR_CLIENT_SECRET }}
           UI_ORCHESTRATOR_INSTANCE_URL: ${{ secrets.UI_ORCHESTRATOR_INSTANCE_URL }}
 
-      # Step 4: Pack the UiPath project into a .nupkg package
+      # Step 5: Pack the UiPath project into a .nupkg package
       - name: Pack UiPath Project
         run: |
-          uipcli pack ./UiPathProject -o "./output/uipath-package.nupkg"
+          ./uipath-cli/tools/uipcli.exe pack ./UiPathProject -o "./output/uipath-package.nupkg"
 
-      # Step 5: Push the packaged project to UiPath Orchestrator
+      # Step 6: Push the packaged project to UiPath Orchestrator
       - name: Push UiPath Package to Orchestrator
         run: |
-          uipcli push "./output/uipath-package.nupkg"
+          ./uipath-cli/tools/uipcli.exe push "./output/uipath-package.nupkg"
