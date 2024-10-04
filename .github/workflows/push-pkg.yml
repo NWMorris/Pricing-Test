@@ -29,12 +29,13 @@ jobs:
           # Add the CLI to PATH (assuming the executable will be in the tools folder)
           $Env:Path += ";$PWD\uipath-cli\tools"
 
-      # Step 3: Deploy the existing .nupkg package using UiPath CLI and OAuth2 (without account name)
+      # Step 3: Deploy the existing .nupkg package using UiPath CLI with account name from secrets
       - name: UiPath Deploy
         run: |
-          ./uipath-cli/tools/uipcli.exe package deploy "./JDELubricantOrderEntry.1.0.8348.nupkg" ${{ secrets.UI_ORCHESTRATOR_INSTANCE_URL }} default -t ${{ secrets.UI_ORCHESTRATOR_REFRESH_TOKEN }} -I ${{ secrets.UI_ORCHESTRATOR_CLIENT_ID }} -S ${{ secrets.UI_ORCHESTRATOR_CLIENT_SECRET }} --applicationScope "OR.Folders.Read OR.Settings.Read"
+          ./uipath-cli/tools/uipcli.exe package deploy "./JDELubricantOrderEntry.1.0.8348.nupkg" ${{ secrets.UI_ORCHESTRATOR_INSTANCE_URL }} default -t ${{ secrets.UI_ORCHESTRATOR_REFRESH_TOKEN }} -a ${{ secrets.UI_ORCHESTRATOR_ACCOUNT_NAME }} -I ${{ secrets.UI_ORCHESTRATOR_CLIENT_ID }} -S ${{ secrets.UI_ORCHESTRATOR_CLIENT_SECRET }} --applicationScope "OR.Folders.Read OR.Settings.Read"
         env:
           UI_ORCHESTRATOR_INSTANCE_URL: ${{ secrets.UI_ORCHESTRATOR_INSTANCE_URL }}
           UI_ORCHESTRATOR_REFRESH_TOKEN: ${{ secrets.UI_ORCHESTRATOR_REFRESH_TOKEN }}
+          UI_ORCHESTRATOR_ACCOUNT_NAME: ${{ secrets.UI_ORCHESTRATOR_ACCOUNT_NAME }}
           UI_ORCHESTRATOR_CLIENT_ID: ${{ secrets.UI_ORCHESTRATOR_CLIENT_ID }}
           UI_ORCHESTRATOR_CLIENT_SECRET: ${{ secrets.UI_ORCHESTRATOR_CLIENT_SECRET }}
