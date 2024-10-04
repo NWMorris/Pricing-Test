@@ -34,10 +34,10 @@ jobs:
         run: |
           Get-ChildItem -Path "uipath-cli" -Recurse
 
-      # Step 4: Pack the UiPath project into a .nupkg package
+      # Step 4: Pack the UiPath project into a .nupkg package (project.json is in the root folder)
       - name: Pack UiPath Project
         run: |
-          ./uipath-cli/tools/uipcli.exe package pack "./UiPathProject/project.json" -o "./output/uipath-package.nupkg"
+          ./uipath-cli/tools/uipcli.exe package pack "./project.json" -o "./output/uipath-package.nupkg"
 
       # Step 5: Push the UiPath package to Orchestrator
       - name: Push UiPath Package to Orchestrator
