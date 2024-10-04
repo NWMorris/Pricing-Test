@@ -34,15 +34,15 @@ jobs:
         run: |
           Get-ChildItem -Path "uipath-cli" -Recurse
 
-      # Step 4: Display UiPath CLI Help to show available commands
-      - name: Display UiPath CLI Help
+      # Step 4: Pack the UiPath project into a .nupkg package
+      - name: Pack UiPath Project
         run: |
-          ./uipath-cli/tools/uipcli.exe --help
+          ./uipath-cli/tools/uipcli.exe package pack "./UiPathProject/project.json" -o "./output/uipath-package.nupkg"
 
-      # Step 5: Push the UiPath project to Orchestrator (assuming packaging is handled automatically)
+      # Step 5: Push the UiPath package to Orchestrator
       - name: Push UiPath Package to Orchestrator
         run: |
-          ./uipath-cli/tools/uipcli.exe push "./UiPathProject" --orchestrator-url $env:UI_ORCHESTRATOR_INSTANCE_URL --client-id $env:UI_ORCHESTRATOR_CLIENT_ID --client-secret $env:UI_ORCHESTRATOR_CLIENT_SECRET
+          ./uipath-cli/tools/uipcli.exe package deploy "./output/uipath-package.nupkg" --orchestrator-url $env:UI_ORCHESTRATOR_INSTANCE_URL --client-id $env:UI_ORCHESTRATOR_CLIENT_ID --client-secret $env:UI_ORCHESTRATOR_CLIENT_SECRET
         env:
           UI_ORCHESTRATOR_CLIENT_ID: ${{ secrets.UI_ORCHESTRATOR_CLIENT_ID }}
           UI_ORCHESTRATOR_CLIENT_SECRET: ${{ secrets.UI_ORCHESTRATOR_CLIENT_SECRET }}
