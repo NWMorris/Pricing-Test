@@ -3,25 +3,33 @@ name: Deploy UiPath Package to On-Prem Orchestrator (2021.10) with External Appl
 on:
   push:
     branches:
-      - main  # Adjust to the branch you want to trigger the action
+      - main
 
 jobs:
   deploy:
-    runs-on: windows-latest  # Use Windows runner
+    runs-on: windows-latest
 
     steps:
-      # Step 1: Check out the repository to pull the UiPath project
+      # Step 1: Checkout the repository
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      # Step 2: Install UiPath CLI on Windows
-      - name: Install UiPath CLI for Windows
+      # Step 2: Download the UiPath CLI NuGet package from Azure DevOps
+      - name: Download and Install UiPath CLI
         run: |
-          Invoke-WebRequest -Uri "https://download.uipath.com/cli/uipath-cli-win.zip" -OutFile "uipath-cli-win.zip"
-          Expand-Archive -Path "uipath-cli-win.zip" -DestinationPath "uipath-cli"
-          $Env:Path += ";$PWD\uipath-cli"
+          # Download the UiPath CLI NuGet package
+          Invoke-WebRequest -Uri "https://pkgs.dev.azure.com/uipath/Public.Feeds/_apis/packaging/feeds/UiPath-Official/nuget/packages/UiPath.CLI/versions/23.10.8894.39673/content" -OutFile "UiPath.CLI.nupkg"
+          
+          # Create a directory for the extracted files
+          New-Item -Path "uipath-cli" -ItemType Directory
+          
+          # Extract the NuGet package (.nupkg is just a zip file)
+          Expand-Archive -Path "UiPath.CLI.nupkg" -DestinationPath "uipath-cli"
+          
+          # Add the CLI binaries to PATH
+          $Env:Path += ";$PWD\uipath-cli\tools"
 
-      # Step 3: Authenticate with UiPath Orchestrator using OAuth (Client ID and Client Secret)
+      # Step 3: Authenticate with UiPath Orchestrator using OAuth
       - name: Authenticate with UiPath Orchestrator
         run: |
           uipcli login -client_id $env:UI_ORCHESTRATOR_CLIENT_ID -client_secret $env:UI_ORCHESTRATOR_CLIENT_SECRET -o $env:UI_ORCHESTRATOR_INSTANCE_URL
@@ -33,7 +41,7 @@ jobs:
       # Step 4: Pack the UiPath project into a .nupkg package
       - name: Pack UiPath Project
         run: |
-          uipcli pack . -o "./output/uipath-package.nupkg"
+          uipcli pack ./UiPathProject -o "./output/uipath-package.nupkg"
 
       # Step 5: Push the packaged project to UiPath Orchestrator
       - name: Push UiPath Package to Orchestrator
