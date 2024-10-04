@@ -17,8 +17,8 @@ jobs:
       # Step 2: Download and Install UiPath CLI (2021 Version)
       - name: Download and Install UiPath CLI (2021 Version)
         run: |
-          # Download the UiPath CLI 2021 version
-          Invoke-WebRequest -Uri "https://pkgs.dev.azure.com/uipath/Public.Feeds/_packaging/UiPath-Official/nuget/v3/UiPath.CLI/versions/21.10.3/content" -OutFile "UiPath.CLI.nupkg"
+          # Download the UiPath CLI 2021.10 version from the provided URL
+          Invoke-WebRequest -Uri "https://pkgs.dev.azure.com/uipath/Public.Feeds/_apis/packaging/feeds/UiPath-Official/nuget/packages/UiPath.CLI/versions/21.10.8319.10920/content" -OutFile "UiPath.CLI.nupkg"
           
           # Create a directory for the extracted files
           New-Item -Path "uipath-cli" -ItemType Directory
