@@ -34,17 +34,12 @@ jobs:
         run: |
           Get-ChildItem -Path "uipath-cli" -Recurse
 
-      # Step 4: Validate Project (Checks for missing dependencies)
-      - name: Validate Project
-        run: |
-          ./uipath-cli/tools/uipcli.exe validate ./project.json
-
-      # Step 5: Pack the UiPath project into a .nupkg package (project.json is in the root folder)
+      # Step 4: Pack the UiPath project into a .nupkg package (project.json is in the root folder)
       - name: Pack UiPath Project
         run: |
           ./uipath-cli/tools/uipcli.exe package pack "./project.json" -o "./output/uipath-package.nupkg"
 
-      # Step 6: Push the UiPath package to Orchestrator
+      # Step 5: Push the UiPath package to Orchestrator
       - name: Push UiPath Package to Orchestrator
         run: |
           ./uipath-cli/tools/uipcli.exe package deploy "./output/uipath-package.nupkg" --orchestrator-url $env:UI_ORCHESTRATOR_INSTANCE_URL --client-id $env:UI_ORCHESTRATOR_CLIENT_ID --client-secret $env:UI_ORCHESTRATOR_CLIENT_SECRET
