@@ -29,21 +29,16 @@ jobs:
           # List contents to verify extraction
           Get-ChildItem -Path "uipath-cli"
 
-      # Step 3: Authenticate with UiPath Orchestrator using the full path to uipcli
-      - name: Authenticate with UiPath Orchestrator
+      # Step 3: Pack the UiPath project into a .nupkg package (with authentication credentials)
+      - name: Pack UiPath Project
         run: |
-          ./uipath-cli/tools/uipcli.exe login -client_id $env:UI_ORCHESTRATOR_CLIENT_ID -client_secret $env:UI_ORCHESTRATOR_CLIENT_SECRET -o $env:UI_ORCHESTRATOR_INSTANCE_URL
+          ./uipath-cli/tools/uipcli.exe pack ./UiPathProject -o "./output/uipath-package.nupkg" --orchestrator-url $env:UI_ORCHESTRATOR_INSTANCE_URL --client-id $env:UI_ORCHESTRATOR_CLIENT_ID --client-secret $env:UI_ORCHESTRATOR_CLIENT_SECRET
+
+      # Step 4: Push the packaged project to UiPath Orchestrator (with authentication credentials)
+      - name: Push UiPath Package to Orchestrator
+        run: |
+          ./uipath-cli/tools/uipcli.exe push "./output/uipath-package.nupkg" --orchestrator-url $env:UI_ORCHESTRATOR_INSTANCE_URL --client-id $env:UI_ORCHESTRATOR_CLIENT_ID --client-secret $env:UI_ORCHESTRATOR_CLIENT_SECRET
         env:
           UI_ORCHESTRATOR_CLIENT_ID: ${{ secrets.UI_ORCHESTRATOR_CLIENT_ID }}
           UI_ORCHESTRATOR_CLIENT_SECRET: ${{ secrets.UI_ORCHESTRATOR_CLIENT_SECRET }}
           UI_ORCHESTRATOR_INSTANCE_URL: ${{ secrets.UI_ORCHESTRATOR_INSTANCE_URL }}
-
-      # Step 4: Pack the UiPath project into a .nupkg package
-      - name: Pack UiPath Project
-        run: |
-          ./uipath-cli/tools/uipcli.exe pack ./UiPathProject -o "./output/uipath-package.nupkg"
-
-      # Step 5: Push the packaged project to UiPath Orchestrator
-      - name: Push UiPath Package to Orchestrator
-        run: |
-          ./uipath-cli/tools/uipcli.exe push "./output/uipath-package.nupkg"
